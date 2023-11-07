@@ -1,0 +1,40 @@
+def solve_n_queens(n):
+    def backtrack(row, queens):
+        if row == n:
+            solutions.append(queens)
+            return
+        
+        for col in range(n):
+            if is_safe(row, col, queens):
+                backtrack(row + 1, queens + [(row, col)])
+    
+    def is_safe(row, col, queens):
+        for queen_row, queen_col in queens:
+            if queen_col == col or queen_row - queen_col == row - col or queen_row + queen_col == row + col:
+                return False
+        return True
+    
+    solutions = []
+    backtrack(0, [])
+    return solutions
+
+
+# Solve the 5-queens problem
+n = int(input("Enter size of board:- \n"))
+solutions = solve_n_queens(n)
+
+# Print the solutions
+if len(solutions) == 0:
+    print("No solutions found.")
+else:
+    print("Number of solutions:", len(solutions))
+    for i, solution in enumerate(solutions):
+        print("Solution", i + 1)
+        for row in range(n):
+            for col in range(n):
+                if (row, col) in solution:
+                    print(" Q ", end="")
+                else:
+                    print(" . ", end="")
+            print()
+        print()
